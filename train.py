@@ -4,6 +4,7 @@ from sklearn.datasets import fetch_california_housing
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.neural_network import MLPRegressor
+from sklearn.metrics import mean_absolute_error
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -29,6 +30,9 @@ model = MLPRegressor(
 )
 model.fit(X_train_s, y_train)
 
+y_train_pred = model.predict(X_train_s)
+y_test_pred = model.predict(X_test_s)
+
 def plot_pred(y_true, y_pred, title, path):
     lo = min(y_true.min(), y_pred.min())
     hi = max(y_true.max(), y_pred.max())
@@ -43,10 +47,21 @@ def plot_pred(y_true, y_pred, title, path):
     plt.savefig(path, dpi=120)
     plt.close()
 
-plot_pred(y_train, model.predict(X_train_s),
-          "Actual vs Predicted - Train", "figures/train_actual_vs_pred.png")
-plot_pred(y_test, model.predict(X_test_s),
-          "Actual vs Predicted - Test", "figures/test_actual_vs_pred.png")
+plot_pred(
+    y_train, 
+    y_train_pred,
+    "Actual vs Predicted - Train", 
+    "figures/train_actual_vs_pred.png"
+)
+plot_pred(
+    y_test, 
+    y_test_pred,
+    "Actual vs Predicted - Test", 
+    "figures/test_actual_vs_pred.png"
+)
 
 print(f"Train R2: {model.score(X_train_s, y_train):.3f}")
 print(f"Test  R2: {model.score(X_test_s, y_test):.3f}")
+
+print(f"Train MAE: {mean_absolute_error(y_train, y_train_pred):.3f}")
+print(f"Test  MAE: {mean_absolute_error(y_test, y_test_pred):.3f}")
