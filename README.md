@@ -6,7 +6,7 @@ branch / PR / review ping-pong.
 ## Partners
 - Jonathan (jrtrippett)
 - Christie Amoah (OPIM5512-IGR24005)
-- Manshi Patel (<manshi's github username>)
+- Manshi Patel (manshipatel10)
 
 ## How to run
     pip install scikit-learn matplotlib
